@@ -1,4 +1,5 @@
 // initial load
+
 var questionsEl = document.getElementById("questions");
 var choicesEl = document.getElementById("choices");
 var highscoreEl = document.getElementById("highscore");
@@ -11,8 +12,9 @@ var choiceCEl = document.getElementById("choiceC");
 var choiceDEl = document.getElementById("choiceD");
 var ans = document.getElementById("answer-result");
 //document.getElementById("choiUl").style.visibility = false;
-
-
+highscoreEl.addEventListener("click",() =>{
+    scores();
+})
 // start button
 const startButton = document.createElement("button");
 startButton.textContent = "START";
@@ -20,20 +22,21 @@ document.body.appendChild(startButton);
 // countdown timer
 
 var timerEl = document.getElementById("timer");
-var timer1 = 60;
+var timer1 = 0;
 
 
 function timeReduce(){
     timer1 = timer1 - 4;
-
 }
+
 startButton.addEventListener("click", () => {
     var timerId = setInterval(countdown, 1000);
     console.log("quiz started");
     startButton.hidden = true;
     initialq.innerHTML = "";
     highscoreEl.innerHTML = "";
-    random();
+    populate();
+    timer1 = 60;
     
     
     function countdown() {
@@ -50,6 +53,7 @@ startButton.addEventListener("click", () => {
     }
 });
 // questions and answers
+
 function que1(){
     questionsEl.innerHTML = 'Which of the following is not a front-end technology?';
     //choiceAEl = {name: "A. HTML", answer: false,};
@@ -78,7 +82,7 @@ function que1(){
     choiceDEl.addEventListener("click", ()=> {
         console.log("clickable");
         ans.innerHTML = "correct";
-        random();
+        populate();
     })
     
 }
@@ -107,7 +111,63 @@ function que2(){
     choiceDEl.addEventListener("click", ()=> {
         console.log("clickable");
         ans.innerHTML = "correct";
-        random();
+        populate();
+    })
+}
+function que3(){
+    questionsEl.innerHTML = 'What is Git?';
+    choiceAEl.innerHTML = "A. Framework";
+    choiceAEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
+    })
+    choiceBEl.innerHTML = "B. Version control system";
+    choiceBEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "correct";
+        populate();
+        
+    })
+    choiceCEl.innerHTML = "C. Database";
+    choiceCEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
+    })
+    choiceDEl.innerHTML = "D. Package manager";
+    choiceDEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
+    })
+}
+function que4(){
+    questionsEl.innerHTML = 'Amongst which of the follwing protocol is used to exchange the data between client and server?';
+    choiceAEl.innerHTML = "A. HTTP";
+    choiceAEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "correct";
+        populate();
+    })
+    choiceBEl.innerHTML = "B. TCP/IP";
+    choiceBEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
+        
+    })
+    choiceCEl.innerHTML = "C. SMTP";
+    choiceCEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
+    })
+    choiceDEl.innerHTML = "D. FTP";
+    choiceDEl.addEventListener("click", ()=> {
+        console.log("clickable");
+        ans.innerHTML = "incorrect";
+        timeReduce();
     })
 }
 
@@ -121,6 +181,11 @@ function cleanSlate(){
     choiceCEl.innerHTML = "";
     choiceDEl.innerHTML = "";
     ans.innerHTML = "";
+    timer1 = 0;
+    done1 = false;
+    done2 = false;
+    done3 = false;
+    done4 = false;
     
 }
 
@@ -131,6 +196,7 @@ function cleanSlate(){
 function scores(){
     cleanSlate();
     initialq.innerHTML = "Highscores";
+
 }
 
 //adding score
@@ -140,32 +206,36 @@ function addScore(){
     startButton.hidden = false;
     highscoreEl.innerHTML = "Highscores";
 
-}
 
+}
+/*var variable = 0;
 function random(){
     let variable = Math.floor((Math.random()*2)+1);
     console.log(variable);
-    if(variable == 1){
-        que1();
-    }else if(variable == 2){
-        que2();
-    }
-}
-
-/* populate question area
-function populate(){
-    if(variable = 0)
+    populate();
 
 }*/
 
-
-
-
-
-
-
-// clickable 
-highscoreEl.addEventListener("click", ()=> {
-    console.log("clickable");
-    scores();
-})
+// populate question area
+var done1 = false;
+var done2 = false;
+var done3 = false;
+var done4 = false;
+function populate(){
+    console.log("pop")
+    if (done1 == false){
+        done1 = true;
+        que1();        
+    } else if(done2 == false){        
+        done2 = true;
+        que2();
+    } else if(done3 == false){        
+        done3 = true;
+        que3();
+    } else if(done4 == false){        
+        done4 = true;
+        que4();
+    }else {
+        addScore();
+    }
+}
