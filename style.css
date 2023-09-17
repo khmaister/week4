@@ -1,4 +1,18 @@
-body {
+.second-header {
   display: flex;
+  flex-wrap: wrap;
   
+  
+  height:200px;
+  width: 100%;
+
+  justify-content: space-between;
+  
+
 }
+h1 {
+  display: flex;
+  justify-content: center;
+}
+
+
