@@ -15,4 +15,16 @@ h1 {
   justify-content: center;
 }
 
+.que {
+  display:flex;
+  justify-content: center;
+}
 
+.choi {
+  display:flex;
+  justify-content: left;
+}
+.clickable:hover {
+  color: blue;
+  cursor:pointer;
+}

@@ -4,32 +4,33 @@
   <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="./style.css">
-    <title>Full Stack Quiz</title>
+    <title>Full Stack Quiz by Van Khin</title>
   </head>
 
   <body>
     <header class="top-header">
       <h1>Full Stack Quiz</h1>
       <div class="second-header">
-        <h3 id="highscore">View Highscores</h3>
+        <h3><span id="highscore" class="clickable"></span></h3>
         <h3 id="timer"></h3>
       </div>
     </header>
 
+    <h3 id="initial-quote" class="que"></h3>
+    <h2 id="questions" class="que"></h2>
 
-    <h2 id="questions"></h2>
+    <section id="choices" class="choi"></section>
+    <div id="choiUl">
+      <div id="choiceA", class="clickable"></div>
+      <div id="choiceB", class="clickable"></div>
+      <div id="choiceC", class="clickable"></div>
+      <div id="choiceD", class="clickable"></div>
+      </div>
 
-    <section id="choices"></section>
+    <section id="answer-result">
+    </section>
 
-    <section id="answer-result"></section>
     <div id="button"></div>
-  
-
-
-
-
-
-
     <script src="./script.js"></script>
   </body>
 
