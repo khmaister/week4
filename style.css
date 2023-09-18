@@ -20,9 +20,10 @@ h1 {
   justify-content: center;
 }
 
-.choi {
+.choiUl {
   display:flex;
-  justify-content: left;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .clickable:hover {
   color: blue;
