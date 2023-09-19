@@ -4,20 +4,23 @@ var questionsEl = document.getElementById("questions");
 var choicesEl = document.getElementById("choices");
 var highscoreEl = document.getElementById("highscore");
 var initialq = document.getElementById("initial-quote");
-initialq.innerHTML = "You have 60 seconds to try to answer as many questions correct as possible and get the highest score. Every incorrect answer will deduct 10 seconds. Good luck!";
-
+initialq.innerHTML = "You have 30 seconds to try to answer as many questions correct as possible and get the highest score. Every incorrect answer will deduct 10 seconds. Good luck!";
 var choiceAEl = document.getElementById("choiceA");
 var choiceBEl = document.getElementById("choiceB");
 var choiceCEl = document.getElementById("choiceC");
 var choiceDEl = document.getElementById("choiceD");
-
-
 var ans = document.getElementById("answer-result");
+var inputEl = document.getElementById("imput");
+var popVal = 0;
+var userInitials = document.getElementById("initials");
 highscoreEl.innerHTML = "View Highscores";
 highscoreEl.addEventListener("click",() =>{
     scores();
 })
-
+var userScoreEl = {
+    userInitials: "",
+    score:"",
+};
 
 // start button
 const startButton = document.createElement("button");
@@ -30,47 +33,46 @@ submitButton.textContent = "Submit";
 document.body.appendChild(submitButton);
 submitButton.hidden = true;
 
-// countdown timer
+//input field
+var inputField = document.getElementById("input-field");
+inputField.hidden = true;
 
+// countdown timer
 var timerEl = document.getElementById("timer");
-var timer1 = 60;
+var timer1 = 30;
 if (timer1 == 0){
     addScore();
 }
 
-
+//incorrect answer effect
 function timeReduce(){
     timer1 = timer1 - 10;
 }
-
+// quiz start
 startButton.addEventListener("click", () => {
     var timerId = setInterval(countdown, 1000);
-    console.log("quiz started");
+    console.log("quiz started"); 
+    function countdown() {
+        timerEl.innerHTML = timer1 + " seconds remaining";
+        if (timer1 <= 0){
+            clearTimeout(timerId);
+            addScore();
+        } else {          
+            timer1--;    
+        }
+    }
     startButton.hidden = true;
     submitButton.hidden= true;
     initialq.innerHTML = "";
     highscoreEl.innerHTML = "";
     popVal=0;
     populate();
-    timer1 = 60;
+    timer1 = 30;
     userScore = 0;
-    
-    
-    function countdown() {
-        timerEl.innerHTML = timer1 + " seconds remaining";
-        if (timer1 <= 0){
-            clearTimeout(timerId);
-            addScore();
-
-        } else {          
-            timer1--;           
-            //questionsEl.innerHTML = que1; 
-            ;      
-        }
-    }
+    inputField.hidden = true;
 });
-// questions and answers
 
+// questions and answers
 function que1(){
     questionsEl.innerHTML = 'Which of the following is not a front-end technology?';
     
@@ -112,7 +114,7 @@ function que1(){
 }
 
 function que2(){
-    questionsEl.innerHTML = 'What is git?';
+    questionsEl.innerHTML = 'What is Git?';
     
     const que2Abutton = document.createElement("choiceA");
     que2Abutton.textContent = "A. Framework";
@@ -149,6 +151,7 @@ function que2(){
     document.getElementById("choiceD").appendChild(que2Dbutton);
     
 }
+
 function que3(){
     questionsEl.innerHTML = 'In an HTML document, which tag is used to add JavaScript code?';
     
@@ -187,6 +190,7 @@ function que3(){
     document.getElementById("choiceD").appendChild(que3Dbutton);
     
 }
+
 function que4(){
     questionsEl.innerHTML = 'Which of the following is an array method in JavaScript?';
     
@@ -225,6 +229,7 @@ function que4(){
     document.getElementById("choiceD").appendChild(que4Dbutton);
     
 }
+
 // clear all fields
 function cleanSlate(){
     questionsEl.innerHTML = "";
@@ -236,12 +241,7 @@ function cleanSlate(){
     choiceDEl.innerHTML = "";
     ans.innerHTML = "";
     timer1 = 0, false;
-    
-
-    
-
 }
-
 function removeListeners(){
     choiceAEl.innerHTML = "";
     choiceBEl.innerHTML = "";
@@ -250,16 +250,25 @@ function removeListeners(){
 }
 
 
-
 // highscore results
 function scores(){
     cleanSlate();
     initialq.innerHTML = "Highscores";
-    return;
+    inputField.hidden = true;
+    submitButton.hidden = true;
+    var scoreRecall = JSON.parse(localStorage.getItem("userScore"));
+    
 
+    questionsEl.innerHTML = scoreRecall.userInitials +" "+scoreRecall.score;
+    
+    //console.log();
+    
 }
-var inputEl = document.getElementById("imput");
-
+function getVal(){
+    const val = document.querySelector("#initials").value;
+    console.log(val);
+    return val;
+}
 //adding score
 function addScore(){
     cleanSlate();
@@ -267,17 +276,26 @@ function addScore(){
     startButton.hidden = false;
     highscoreEl.innerHTML = "Highscores";
     submitButton.hidden = false;
+    inputField.hidden = false;
+    
+    submitButton.addEventListener("click", () => {
+        
+        //select initials input, grab value and set to userScoreEl.userInitials
+        userScoreEl.userInitials =  getVal();
+        //set value userScore on userScoreEl.score
+        userScoreEl.score = userScore;
 
+        localStorage.setItem("userScore",JSON.stringify(userScoreEl));
+        console.log(userScoreEl);
+        scores();
 
-
+    })
 }
-
-var popVal = 0;
+// call questions
 function populate(){
     console.log("pop")
     if (popVal == 0){
-        popVal = popVal + 1;
-        
+        popVal = popVal + 1;       
         que1();        
     } else if(popVal == 1){  
         removeListeners();     
@@ -294,6 +312,5 @@ function populate(){
     }else {
         addScore();
     }
-    
 }
 
